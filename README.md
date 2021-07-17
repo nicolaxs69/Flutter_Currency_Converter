@@ -1,4 +1,5 @@
-# hello_rectangle
+# Flutter currency converter
+
 
 A new Flutter project.
 
