@@ -4,7 +4,15 @@ import 'package:hello_rectangle/unit.dart';
 
 final _backgroundColor = Colors.white;
 
-class CategoryContainer extends StatelessWidget {
+class CategoryRoute extends StatefulWidget {
+
+  @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
+
+class _CategoryRouteState extends State<CategoryRoute> {
+  final _categories = <Category>[];
+
   static const _categoryNames = <String>[
     'Length',
     'Area',
@@ -27,30 +35,42 @@ class CategoryContainer extends StatelessWidget {
     Colors.red,
   ];
 
-  Widget _buildCategoryWidgets(List<Widget> categories) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categories[index],
-      itemCount: categories.length,
-    );
-  }
-
   @override
-  Widget build(BuildContext context) {
-    final categories = <Category>[];
-
+  void initState() {
+    super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(Category(
+      _categories.add(Category(
         name: _categoryNames[i],
         color: _baseColors[i],
         iconLocation: Icons.cake,
         units: _retrieveUnitList(_categoryNames[i]),
       ));
     }
+  }
 
+  Widget _buildCategoryWidgets() {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) => _categories[index],
+      itemCount: _categories.length,
+    );
+  }
+
+  List<Unit> _retrieveUnitList(String categoryName) {
+    return List.generate(10, (int i) {
+      i += 1;
+      return Unit(
+        name: '$categoryName Unit $i',
+        conversion: i.toDouble(),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final listView = Container(
       color: _backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryWidgets(categories),
+      child: _buildCategoryWidgets(),
     );
 
     final appBar = AppBar(
@@ -70,15 +90,5 @@ class CategoryContainer extends StatelessWidget {
       appBar: appBar,
       body: listView,
     );
-  }
-
-  List<Unit> _retrieveUnitList(String categoryName) {
-    return List.generate(10, (int i) {
-      i += 1;
-      return Unit(
-        name: '$categoryName Unit $i',
-        conversion: i.toDouble(),
-      );
-    });
   }
 }

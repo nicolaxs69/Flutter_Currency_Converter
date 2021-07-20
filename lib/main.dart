@@ -27,7 +27,7 @@ class UnitConverterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false, home: CategoryContainer());
+        debugShowCheckedModeBanner: false, home: CategoryRoute());
   }
 }
 
@@ -43,7 +43,7 @@ class MyStatelessWidget extends StatelessWidget {
       ),
       backgroundColor: Colors.green[200],
       body: Center(
-        child: CategoryContainer()
+        child: CategoryRoute()
       ),
     );
   }
